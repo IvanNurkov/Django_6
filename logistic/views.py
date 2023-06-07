@@ -1,5 +1,4 @@
 from rest_framework.viewsets import ModelViewSet
-
 from logistic.models import Product, Stock
 from logistic.serializers import ProductSerializer, StockSerializer
 from django_filters.rest_framework import DjangoFilterBackend
@@ -16,5 +15,5 @@ class StockViewSet(ModelViewSet):
     queryset = Stock.objects.all()
     serializer_class = StockSerializer
     filter_backends = [DjangoFilterBackend]
-    filter_fields = ['address', 'products']
+    filterset_fields = ['address', 'products']
     # при необходимости добавьте параметры фильтрации

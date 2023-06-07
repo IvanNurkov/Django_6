@@ -14,7 +14,6 @@ class ProductPositionSerializer(serializers.ModelSerializer):
 class StockSerializer(serializers.ModelSerializer):
     positions = ProductPositionSerializer(many=True)
     # настройте сериализатор для склада
-
     def create(self, validated_data):
         # достаем связанные данные для других таблиц
         positions = validated_data.pop('positions')
@@ -22,8 +21,7 @@ class StockSerializer(serializers.ModelSerializer):
         stock = super().create(validated_data)
         for i in positions:
             new_product = StockProduct.objects.create(product=i['product'], stock=stock, quantity=i['quantity'],
-                                                           price=i['price'])
-            stock.positions.add(new_product)
+                                                           price=i['price'], positions=positions)
         return stock
 
     def update(self, instance, validated_data):
